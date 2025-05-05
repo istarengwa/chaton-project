@@ -36,12 +36,17 @@
     </turbo-frame>
 
     <div class="text-center mt-4">
-      <%= button_to "Passer commande", orders_path, method: :post, class: "btn btn-success btn-lg", data: { turbo_confirm: "Valider cette commande ?" } %>
+      <%= button_to "Passer commande", checkout_path, method: :post, class: "btn btn-success btn-lg", data: { turbo: false } %>
     </div>
   <% else %>
     <div class="alert alert-info text-center" role="alert">
       Ton panier est vide pour l’instant 😿<br>
       <%= link_to "Découvre nos chatons", items_path, class: "btn btn-outline-primary mt-3" %>
+    </div>
+  <% end %>
+  <% if params[:status] == "paid" %>
+    <div class="alert alert-success text-center">
+      ✅ Merci pour ta commande ! Un email te sera envoyé avec les photos de tes chatons.
     </div>
   <% end %>
 </div>
