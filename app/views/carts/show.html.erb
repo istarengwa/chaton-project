@@ -36,7 +36,7 @@
     </turbo-frame>
 
     <div class="text-center mt-4">
-      <%= link_to "Passer au paiement", "#", class: "btn btn-success btn-lg disabled" %>
+      <%= button_to "Passer commande", orders_path, method: :post, class: "btn btn-success btn-lg", data: { turbo_confirm: "Valider cette commande ?" } %>
     </div>
   <% else %>
     <div class="alert alert-info text-center" role="alert">

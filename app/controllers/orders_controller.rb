@@ -3,11 +3,12 @@ class OrdersController < ApplicationController
 
   # GET /orders or /orders.json
   def index
-    @orders = Order.all
+    @orders = current_user.orders.includes(:order_items)
   end
 
   # GET /orders/1 or /orders/1.json
   def show
+    @order = current_user.orders.find(params[:id])
   end
 
   # GET /orders/new
@@ -21,17 +22,29 @@ class OrdersController < ApplicationController
 
   # POST /orders or /orders.json
   def create
-    @order = Order.new(order_params)
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to @order, notice: "Order was successfully created." }
-        format.json { render :show, status: :created, location: @order }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
-      end
+    cart = current_user.cart
+    if cart.cart_items.empty?
+      redirect_to cart_path, alert: "Ton panier est vide !"
+      return
     end
+
+    total = cart.cart_items.sum { |ci| ci.item.price }
+
+    # Création de la commande
+    order = current_user.orders.create!(
+      status: "en_attente",
+      total_cents: (total * 100).to_i # stocké en centimes
+    )
+
+    # Ajout des items à la commande
+    cart.cart_items.each do |cart_item|
+      order.order_items.create!(item: cart_item.item)
+    end
+
+    # Vidage du panier
+    cart.cart_items.destroy_all
+
+    redirect_to order_path(order), notice: "Commande enregistrée avec succès !"
   end
 
   # PATCH/PUT /orders/1 or /orders/1.json
