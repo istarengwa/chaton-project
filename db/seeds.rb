@@ -9,7 +9,11 @@
 #   end
 require 'faker'
 
-10.times do
+puts "🧹 Suppression des anciens items..."
+Item.destroy_all
+
+puts "📸 Création de 20 nouveaux chatons..."
+20.times do
   Item.create!(
     title: Faker::Creature::Cat.name,
     description: Faker::Lorem.paragraph(sentence_count: 2),
@@ -17,3 +21,5 @@ require 'faker'
     image_url: "https://placecats.com/400/300?random=#{rand(1..1000)}"
   )
 end
+
+puts "✅ Seed terminée avec succès."
