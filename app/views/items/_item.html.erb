@@ -1,0 +1,22 @@
+<div id="<%= dom_id item %>">
+  <p>
+    <strong>Title:</strong>
+    <%= item.title %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= item.description %>
+  </p>
+
+  <p>
+    <strong>Price:</strong>
+    <%= item.price %>
+  </p>
+
+  <p>
+    <strong>Image :</strong><br>
+    <%= image_tag item.image_url, alt: item.title, width: 300 %>
+  </p>
+
+</div>

@@ -1,0 +1,6 @@
+class Item < ApplicationRecord
+  validates :title, presence: true, length: { maximum: 100 }
+  validates :description, presence: true
+  validates :price, presence: true, numericality: { greater_than: 0 }
+  validates :image_url, presence: true, format: { with: URI::DEFAULT_PARSER.make_regexp(%w[http https]), message: "doit être une URL valide" }
+end
