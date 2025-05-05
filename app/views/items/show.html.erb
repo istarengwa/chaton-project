@@ -12,7 +12,13 @@
           <h4 class="text-success"><%= number_to_currency(@item.price, unit: "€") %></h4>
 
           <div class="mt-4 d-flex gap-2">
-            <%= link_to "Retour à la boutique", items_path, class: "btn btn-outline-secondary" %>
+            <%= link_to "← Retour à la boutique", items_path, class: "btn btn-outline-secondary" %>
+
+            <% if user_signed_in? %>
+              <%= button_to "Ajouter au panier 🛒", cart_items_path(item_id: @item.id), method: :post, class: "btn btn-primary" %>
+            <% else %>
+              <%= link_to "Connecte-toi pour acheter", new_user_session_path, class: "btn btn-outline-primary" %>
+            <% end %>
           </div>
         </div>
       </div>
