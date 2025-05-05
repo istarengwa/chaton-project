@@ -20,6 +20,68 @@ class OrdersController < ApplicationController
   def edit
   end
 
+  def create_checkout
+    cart = current_user.cart
+    if cart.cart_items.empty?
+      redirect_to cart_path, alert: "Ton panier est vide."
+      return
+    end
+  
+    total = cart.cart_items.sum { |ci| ci.item.price }
+  
+    # Création de la commande
+    order = current_user.orders.create!(
+      status: "en_attente",
+      total_cents: (total * 100).to_i
+    )
+  
+    cart.cart_items.each do |cart_item|
+      order.order_items.create!(item: cart_item.item)
+    end
+  
+    # On vide le panier AVANT paiement (tu peux inverser si besoin)
+    cart.cart_items.destroy_all
+  
+    # Création de la session Stripe
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: order.order_items.map do |order_item|
+        item = order_item.item
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: item.title,
+              description: item.description,
+              images: [item.image_url]
+            },
+            unit_amount: (item.price * 100).to_i
+          },
+          quantity: 1
+        }
+      end,
+      mode: 'payment',
+      success_url: cart_url + "?status=paid",
+      cancel_url: orders_cancel_url
+    )
+  
+    order.update(stripe_payment_id: session.payment_intent)
+  
+    redirect_to session.url, allow_other_host: true
+  end
+  
+  def success
+    session = Stripe::Checkout::Session.retrieve(params[:session_id])
+    payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent)
+  
+    # Optionnel : tu peux stocker le payment_intent.id dans l’ordre
+    order = current_user.orders.order(created_at: :desc).first
+    order.update(status: "paid", stripe_payment_id: payment_intent.id)
+  
+    redirect_to order_path(order), notice: "Merci pour ta commande !"
+  end  
+  
+
   # POST /orders or /orders.json
   def create
     cart = current_user.cart
