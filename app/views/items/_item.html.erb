@@ -1,22 +1,10 @@
-<div id="<%= dom_id item %>">
-  <p>
-    <strong>Title:</strong>
-    <%= item.title %>
-  </p>
+<div class="card shadow-sm border-0 h-100">
+  <%= image_tag item.image_url, alt: item.title, class: "card-img-top", style: "object-fit: cover; height: 180px;" %>
 
-  <p>
-    <strong>Description:</strong>
-    <%= item.description %>
-  </p>
-
-  <p>
-    <strong>Price:</strong>
-    <%= item.price %>
-  </p>
-
-  <p>
-    <strong>Image :</strong><br>
-    <%= image_tag item.image_url, alt: item.title, width: 300 %>
-  </p>
-
+  <div class="card-body">
+    <h5 class="card-title mb-2"><%= item.title %></h5>
+    <p class="card-text small text-muted"><%= truncate(item.description, length: 80) %></p>
+    <p class="fw-bold text-success"><%= number_to_currency(item.price, unit: "€") %></p>
+    <%= link_to "Voir le chaton", item, class: "btn btn-outline-success btn-sm" %>
+  </div>
 </div>
