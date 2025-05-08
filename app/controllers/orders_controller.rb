@@ -80,6 +80,7 @@ class OrdersController < ApplicationController
 
     # Envoi de l'email de confirmation
     OrderMailer.confirmation_email(order).deliver_later
+    UserMailer.order_notification(order).deliver_later
   
     redirect_to cart_path(status: "paid")
   end  
