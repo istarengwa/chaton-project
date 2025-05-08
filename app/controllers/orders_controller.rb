@@ -1,6 +1,8 @@
+include Rails.application.routes.url_helpers
+
 class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy ]
-
+  
   # GET /orders or /orders.json
   def index
     @orders = current_user.orders.includes(:order_items)
@@ -53,7 +55,7 @@ class OrdersController < ApplicationController
             product_data: {
               name: item.title,
               description: item.description,
-              images: [item.image_url]
+              images: [item.image.attached? ? Rails.application.routes.url_helpers.rails_blob_url(item.image, only_path: false) : nil]
             },
             unit_amount: (item.price * 100).to_i
           },

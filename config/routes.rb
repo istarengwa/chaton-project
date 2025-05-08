@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   post "checkout", to: "orders#create_checkout", as: :checkout
   get "orders/success", to: "orders#success"
   get "orders/cancel", to: "orders#cancel"
+  get "/profil", to: "users#profile", as: :user_profile
 
   resources :order_items
   resources :orders, only: [:create, :index, :show]
