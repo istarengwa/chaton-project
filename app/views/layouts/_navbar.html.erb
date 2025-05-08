@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+  <div class="container">
+    <%= link_to "🐱 ChatonStore", root_path, class: "navbar-brand fw-bold" %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Boutique", items_path, class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Mon panier", cart_path, class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <%= link_to "Mon profil", edit_user_registration_path, class: "nav-link" %>
+          </li>
+
+          <li class="nav-item">
+            <%= button_to "Se déconnecter", destroy_user_session_path, method: :delete, class: "nav-link text-danger" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Se connecter", new_user_session_path, class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>
