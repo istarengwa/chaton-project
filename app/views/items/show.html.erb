@@ -2,20 +2,30 @@
 
 <div class="container py-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card shadow-lg border-0">
-        <%= image_tag @item.image_url, alt: @item.title, class: "card-img-top", style: "object-fit: cover; height: 400px;" %>
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0 overflow-hidden">
+        <%= image_tag @item.image_url, alt: @item.title, class: "w-100", style: "object-fit: cover; height: 400px;" %>
 
         <div class="card-body">
-          <h1 class="card-title"><%= @item.title %></h1>
-          <p class="text-muted"><%= @item.description %></p>
-          <h4 class="text-success"><%= number_to_currency(@item.price, unit: "€") %></h4>
+          <h1 class="card-title mb-3"><%= @item.title %></h1>
+          <p class="card-text text-muted"><%= @item.description %></p>
+          <h4 class="text-success fw-bold mt-3"><%= number_to_currency(@item.price, unit: "€") %></h4>
 
-          <div class="mt-4 d-flex gap-2">
+          <div class="d-flex flex-wrap gap-3 mt-4">
             <%= link_to "← Retour à la boutique", items_path, class: "btn btn-outline-secondary" %>
 
             <% if user_signed_in? %>
-              <%= button_to "Ajouter au panier 🛒", cart_items_path(item_id: @item.id), method: :post, class: "btn btn-primary" %>
+              <%= button_to "🛒 Ajouter au panier", cart_items_path(item_id: @item.id), method: :post, class: "btn btn-primary" %>
+
+              <% if current_user.is_admin? %>
+                <%= link_to "✏️ Modifier", edit_item_path(@item), class: "btn btn-outline-dark" %>
+                <%= link_to "🗑️ Supprimer", item_path(@item), method: :delete,
+                      data: {
+                        turbo_method: :delete, 
+                        turbo_confirm: "Tu es sûr·e de vouloir supprimer ce chaton ?" 
+                      },
+                      class: "btn btn-outline-danger" %>
+              <% end %>
             <% else %>
               <%= link_to "Connecte-toi pour acheter", new_user_session_path, class: "btn btn-outline-primary" %>
             <% end %>

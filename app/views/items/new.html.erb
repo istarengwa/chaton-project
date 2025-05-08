@@ -1,11 +1,18 @@
-<% content_for :title, "New item" %>
+<% content_for :title, "Ajouter un nouveau chaton 🐱" %>
 
-<h1>New item</h1>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <h2 class="card-title mb-4 text-center">📸 Nouveau chaton</h2>
+          <%= render "form", item: @item %>
 
-<%= render "form", item: @item %>
-
-<br>
-
-<div>
-  <%= link_to "Back to items", items_path %>
+          <div class="text-center mt-4">
+            <%= link_to "← Retour à la boutique", items_path, class: "btn btn-outline-secondary" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
