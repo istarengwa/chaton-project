@@ -61,7 +61,7 @@ class OrdersController < ApplicationController
         }
       end,
       mode: 'payment',
-      success_url: cart_url + "?status=paid",
+      success_url: orders_success_url + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: orders_cancel_url
     )
   
@@ -77,8 +77,11 @@ class OrdersController < ApplicationController
     # Optionnel : tu peux stocker le payment_intent.id dans l’ordre
     order = current_user.orders.order(created_at: :desc).first
     order.update(status: "paid", stripe_payment_id: payment_intent.id)
+
+    # Envoi de l'email de confirmation
+    OrderMailer.confirmation_email(order).deliver_later
   
-    redirect_to order_path(order), notice: "Merci pour ta commande !"
+    redirect_to cart_path(status: "paid")
   end  
   
 
