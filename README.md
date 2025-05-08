@@ -3,7 +3,7 @@
 ![Ruby version](https://img.shields.io/badge/Ruby-3.2.2-red?logo=ruby)
 ![Rails version](https://img.shields.io/badge/Rails-8.0.2-red?logo=rubyonrails)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Status](https://img.shields.io/badge/status-en%20cours%20de%20dev-blue)
+![Status](https://img.shields.io/badge/mvp-green)
 
 Une application e-commerce développée en **Rails 8**, permettant d’acheter et de télécharger des photos de chatons. 🐱💳  
 Intégration complète de Stripe, Active Storage, Devise, et interface admin avec Bootstrap.
