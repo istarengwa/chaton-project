@@ -1,0 +1,9 @@
+Merci <%= @user.email %> pour ta commande !
+
+Voici les photos de tes chatons :
+
+<% @items.each do |item| %>
+- <%= item.title %> : <%= item.image_url %>
+<% end %>
+
+À très vite pour plus de miaous.

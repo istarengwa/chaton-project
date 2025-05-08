@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  post "checkout", to: "orders#create_checkout", as: :checkout
+  get "orders/success", to: "orders#success"
+  get "orders/cancel", to: "orders#cancel"
+
   resources :order_items
   resources :orders, only: [:create, :index, :show]
   get "carts/show"
@@ -6,10 +10,6 @@ Rails.application.routes.draw do
   devise_for :users
   resources :items
   resource :cart, only: [:show]
-
-  post "checkout", to: "orders#create_checkout", as: :checkout
-  get "orders/success", to: "orders#success"
-  get "orders/cancel", to: "orders#cancel"
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -1,0 +1,14 @@
+<h1>Merci <%= @user.email %> pour ta commande ! 😻</h1>
+
+<p>Voici les photos de tes chatons :</p>
+
+<ul>
+  <% @items.each do |item| %>
+    <li>
+      <strong><%= item.title %></strong><br>
+      <%= link_to item.image_url, item.image_url, target: "_blank" %>
+    </li>
+  <% end %>
+</ul>
+
+<p>Nous espérons qu’ils te feront ronronner de bonheur 🐾</p>
