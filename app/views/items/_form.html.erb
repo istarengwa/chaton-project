@@ -1,0 +1,36 @@
+<%= form_with(model: item, local: true, html: { multipart: true }) do |form| %>
+  <% if item.errors.any? %>
+    <div class="alert alert-danger">
+      <h5><%= pluralize(item.errors.count, "erreur") %> empêchent l’enregistrement :</h5>
+      <ul>
+        <% item.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, rows: 3, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :price, class: "form-label" %>
+    <%= form.number_field :price, step: 0.01, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :image, "Photo du chaton", class: "form-label" %>
+    <%= form.file_field :image, class: "form-control" %>
+  </div>
+
+  <div class="text-center">
+    <%= form.submit class: "btn btn-success btn-lg" %>
+  </div>
+<% end %>

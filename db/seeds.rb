@@ -7,3 +7,16 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+require 'faker'
+
+puts "🧹 Suppression des anciens items..."
+Item.destroy_all
+User.destroy_all
+
+User.create!(
+  email: "admin@yopmail.com",
+  password: "123456",
+  is_admin: true
+)
+
+puts "✅ Seed terminée avec succès."

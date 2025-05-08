@@ -1,0 +1,23 @@
+<% content_for :title, "Nos chatons trop mignons" %>
+
+<div class="py-5" style="background-color: #f8fafc;">
+  <div class="container">
+    <h1 class="text-center mb-5">Nos chatons à adopter 🐾</h1>
+
+    <% if user_signed_in? && current_user.is_admin? %>
+      <div class="text-end mb-3">
+        <%= link_to "➕ Ajouter un chaton", new_item_path, class: "btn btn-primary" %>
+      </div>
+    <% end %>
+
+    <div class="row justify-content-center">
+      <% @items.each do |item| %>
+        <div class="col-sm-10 col-md-6 col-lg-4 mb-4">
+          <%= render item %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%# <%= link_to "New item", new_item_path %>

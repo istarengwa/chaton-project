@@ -1,0 +1,5 @@
+<% total = cart.cart_items.includes(:item).sum { |ci| ci.item.price } %>
+
+<div class="text-center mt-4">
+  <h4 class="fw-bold">Total : <%= number_to_currency(total, unit: "€") %></h4>
+</div>

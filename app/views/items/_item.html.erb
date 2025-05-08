@@ -1,0 +1,10 @@
+<div class="card shadow-sm border-0 h-100">
+  <%= image_tag item.image, class: "card-img-top", style: "width: 300px; height: 300px; object-fit: cover;", alt: item.title if item.image.attached? %>
+
+  <div class="card-body">
+    <h5 class="card-title mb-2"><%= item.title %></h5>
+    <p class="card-text small text-muted"><%= truncate(item.description, length: 80) %></p>
+    <p class="fw-bold text-success"><%= number_to_currency(item.price, unit: "€") %></p>
+    <%= link_to "Voir le chaton", item, class: "btn btn-outline-success btn-sm" %>
+  </div>
+</div>
