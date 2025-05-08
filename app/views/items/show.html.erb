@@ -4,7 +4,7 @@
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="card shadow-sm border-0 overflow-hidden">
-        <%= image_tag @item.image_url, alt: @item.title, class: "w-100", style: "object-fit: cover; height: 400px;" %>
+        <%= image_tag @item.image, class: "img-fluid rounded shadow", style: "max-width: 800px; max-height: 600px; object-fit: cover;", alt: @item.title if @item.image.attached? %>
 
         <div class="card-body">
           <h1 class="card-title mb-3"><%= @item.title %></h1>
