@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: %i[ show edit update destroy ]
+  before_action :require_admin, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /items or /items.json
   def index
@@ -66,5 +67,9 @@ class ItemsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def item_params
       params.expect(item: [ :title, :description, :price, :image_url ])
+    end
+
+    def require_admin
+      redirect_to root_path, alert: "Accès refusé." unless current_user&.is_admin?
     end
 end
