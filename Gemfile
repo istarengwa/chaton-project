@@ -68,6 +68,6 @@ gem "devise", "~> 4.9"
 
 gem "dotenv", "~> 3.1"
 
-gem "stripe", "~> 15.1"
+gem "stripe", "~> 17.1"
 
 gem "image_processing", "~> 1.14"
